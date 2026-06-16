@@ -1,0 +1,26 @@
+name: Bug report
+description: Report something that's broken
+labels: [bug]
+body:
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened?
+      description: Steps to reproduce, plus expected vs actual behavior.
+    validations:
+      required: true
+  - type: input
+    id: tool
+    attributes:
+      label: Tool / resource involved
+      placeholder: e.g. search_genes, get_pathway_info
+  - type: input
+    id: version
+    attributes:
+      label: kegg-mcp version
+      placeholder: npm view kegg-mcp version  /  npm ls -g kegg-mcp
+  - type: input
+    id: node
+    attributes:
+      label: Node version
+      placeholder: node --version

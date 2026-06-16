@@ -1,0 +1,57 @@
+name: Publish
+
+# Builds the package, attaches the versioned tarball + SHA256 checksum to the
+# GitHub release, and publishes to npm with provenance (when NPM_TOKEN is set).
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+
+permissions:
+  contents: write # attach artifacts to the release
+  id-token: write # npm provenance (sigstore)
+
+env:
+  HAS_TOKEN: ${{ secrets.NPM_TOKEN != '' }}
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: lts/*
+          registry-url: https://registry.npmjs.org
+          cache: npm
+
+      - run: npm ci
+      - run: npm run build
+
+      - name: Build package tarball
+        run: npm pack
+
+      - name: Generate checksum
+        run: |
+          TGZ="$(ls kegg-mcp-*.tgz)"
+          sha256sum "$TGZ" > SHA256SUMS.txt
+          echo "::notice::Package: $TGZ"
+
+      - name: Attach artifacts to GitHub release
+        if: github.event_name == 'release'
+        run: gh release upload "$GITHUB_REF_NAME" kegg-mcp-*.tgz SHA256SUMS.txt --clobber
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Publish to npm (with provenance)
+        if: env.HAS_TOKEN == 'true'
+        run: npm publish --provenance --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Publish skipped (no NPM_TOKEN)
+        if: env.HAS_TOKEN != 'true'
+        run: |
+          echo "::warning::NPM_TOKEN secret is not set — attached artifacts only, npm publish skipped. Add an 'NPM_TOKEN' secret to enable publishing (with provenance)."

@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: KEGG API question
+    url: https://www.kegg.jp/kegg/rest/keggapi.html
+    about: Questions about the KEGG REST API itself (not this server) belong with Kanehisa Laboratories.
+  - name: Discussions
+    url: https://github.com/AriaShishegaran/kegg-mcp/discussions
+    about: General questions and ideas.

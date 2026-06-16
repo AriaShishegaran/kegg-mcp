@@ -2,7 +2,6 @@
   "name": "kegg-mcp",
   "version": "1.0.0",
   "description": "MCP server for the KEGG (Kyoto Encyclopedia of Genes and Genomes) REST API",
-  "private": true,
   "type": "module",
   "bin": {
     "kegg-mcp": "./dist/index.js"
@@ -12,15 +11,17 @@
   ],
   "scripts": {
     "build": "tsc && chmod +x dist/index.js",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint src tests --ext .ts",
     "test": "vitest run",
     "test:integration": "vitest run tests/integration.test.ts",
-    "lint": "eslint src tests --ext .ts",
-    "typecheck": "tsc --noEmit",
+    "prepublishOnly": "npm run build && npm run typecheck && npm run lint && npm test",
     "watch": "tsc --watch",
     "start": "node dist/index.js"
   },
   "keywords": [
     "mcp",
+    "mcp-server",
     "model-context-protocol",
     "kegg",
     "bioinformatics",
@@ -29,10 +30,15 @@
     "genomics",
     "metabolomics",
     "biochemistry",
-    "molecular-biology"
+    "molecular-biology",
+    "claude",
+    "llm"
   ],
   "author": "Aria",
   "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/AriaShishegaran/kegg-mcp.git"
