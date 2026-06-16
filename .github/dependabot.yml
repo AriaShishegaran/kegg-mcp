@@ -1,18 +1,41 @@
 version: 2
 updates:
+  # npm dependencies — grouped, with disruptive majors held back
   - package-ecosystem: npm
     directory: /
     schedule:
       interval: weekly
+      day: monday
     open-pull-requests-limit: 5
+    groups:
+      types:
+        patterns: ["@types/*"]
+      test:
+        patterns: ["vitest", "@vitest/*"]
+    ignore:
+      - dependency-name: "typescript"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "eslint"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "vitest"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "@typescript-eslint/eslint-plugin"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "@typescript-eslint/parser"
+        update-types: ["version-update:semver-major"]
     commit-message:
       prefix: chore
       include: scope
+
+  # GitHub Actions — all grouped into a single PR
   - package-ecosystem: github-actions
     directory: /
     schedule:
       interval: weekly
-    open-pull-requests-limit: 5
+      day: monday
+    groups:
+      actions:
+        patterns: ["*"]
     commit-message:
       prefix: ci
       include: scope
