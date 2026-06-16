@@ -1,0 +1,58 @@
+{
+  "name": "kegg-mcp",
+  "version": "1.0.0",
+  "description": "MCP server for the KEGG (Kyoto Encyclopedia of Genes and Genomes) REST API",
+  "private": true,
+  "type": "module",
+  "bin": {
+    "kegg-mcp": "./dist/index.js"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc && chmod +x dist/index.js",
+    "test": "vitest run",
+    "test:integration": "vitest run tests/integration.test.ts",
+    "lint": "eslint src tests --ext .ts",
+    "typecheck": "tsc --noEmit",
+    "watch": "tsc --watch",
+    "start": "node dist/index.js"
+  },
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "kegg",
+    "bioinformatics",
+    "systems-biology",
+    "pathways",
+    "genomics",
+    "metabolomics",
+    "biochemistry",
+    "molecular-biology"
+  ],
+  "author": "Aria",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/AriaShishegaran/kegg-mcp.git"
+  },
+  "homepage": "https://github.com/AriaShishegaran/kegg-mcp",
+  "bugs": {
+    "url": "https://github.com/AriaShishegaran/kegg-mcp/issues"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "1.29.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.15.0",
+    "typescript": "^5.8.0",
+    "vitest": "^3.2.0",
+    "eslint": "^9.25.0",
+    "@typescript-eslint/eslint-plugin": "^8.31.0",
+    "@typescript-eslint/parser": "^8.31.0"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  }
+}
