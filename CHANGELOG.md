@@ -4,6 +4,10 @@ All notable changes to this project are documented here.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and versioning follows [Semantic Versioning](https://semver.org/).
 
+## 1.0.1 (2026-06-16)
+
+**Full Changelog**: https://github.com/AriaShishegaran/kegg-mcp/compare/v1.0.0...v1.0.1
+
 ## [1.0.0] - 2026-06-16
 
 ### Added
